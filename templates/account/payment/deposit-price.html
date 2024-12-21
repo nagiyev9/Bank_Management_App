@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}
+
+<!-- Title -->
+{% block title %} Deposit | Price {% endblock %}
+
+<!-- Body -->
+{% block body %}
+<section style="margin-top: 100px">
+  <form method="post">
+    <div class="container mt-5 px-5">
+      <div class="mb-4">
+        <h2>Set Deposit Amount</h2>
+        <span>
+          Enter the amount you wish to deposit into your account. Once the
+          transaction is completed, the funds will be added to your balance.
+        </span>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-md-8">{% csrf_token %} {{ form|crispy }}</div>
+      </div>
+
+      <div class="mt-4 mb-4 d-flex justify-content-between">
+        <a href="{% url 'account:profile_page' %}" class="btn btn-link"
+          >Cancel</a
+        >
+
+        <button type="submit" class="btn btn-success px-3">Pay</button>
+      </div>
+    </div>
+  </form>
+</section>
+{% endblock %}

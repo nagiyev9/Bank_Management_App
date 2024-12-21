@@ -1,0 +1,105 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}
+
+<!-- Title -->
+{% block title %} Bank Management | Card Activate {% endblock %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+  input[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+  }
+</style>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div
+  class="container d-flex justify-content-center align-items-center"
+  style="min-height: 100vh"
+>
+  <form method="POST">
+    {% csrf_token %}
+    <!-- User Information -->
+    <div class="row mb-4">
+      <div class="col">
+        <div data-mdb-input-init class="form-outline">
+          <input
+            type="text"
+            id="form3Example1"
+            class="form-control"
+            value="{{ account.user.first_name }}"
+            readonly
+          />
+          <label class="form-label" for="form3Example1">First name</label>
+        </div>
+      </div>
+      <div class="col">
+        <div data-mdb-input-init class="form-outline">
+          <input
+            type="text"
+            id="form3Example2"
+            class="form-control"
+            value="{{ account.user.last_name }}"
+            readonly
+          />
+          <label class="form-label" for="form3Example2">Last name</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Information -->
+    <div data-mdb-input-init class="form-outline mb-4">
+      <input
+        type="email"
+        id="form3Example3"
+        class="form-control"
+        value="{{ account.card.card_number }}"
+        readonly
+      />
+      <label class="form-label" for="form3Example3">Card Number</label>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col">
+        <div data-mdb-input-init class="form-outline">
+          <input
+            type="text"
+            id="form3Example1"
+            class="form-control"
+            value="{{ account.card.card_cvv }}"
+            readonly
+          />
+          <label class="form-label" for="form3Example1">CVV</label>
+        </div>
+      </div>
+      <div class="col">
+        <div data-mdb-input-init class="form-outline">
+          <input
+            type="text"
+            id="form3Example2"
+            class="form-control"
+            value="{{ account.card.card_expire_date }}"
+            readonly
+          />
+          <label class="form-label" for="form3Example2">Expire date</label>
+        </div>
+      </div>
+    </div>
+
+    {{ form|crispy }}
+
+    <!-- Submit Button -->
+    <button
+      data-mdb-ripple-init
+      type="submit"
+      class="btn btn-primary btn-block mb-4"
+    >
+      Set password
+    </button>
+  </form>
+</div>
+{% endblock %}

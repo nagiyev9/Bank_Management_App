@@ -1,0 +1,92 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Logs and debug info
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Django stuff:
+*.migrations/
+*.migrations/*.pyc
+
+# Flask stuff:
+instance/
+.webassets-cache/
+
+# Static and media files
+staticfiles/
+media/
+
+# Jinja compiled templates
+*.jinja2c
+
+# Environment variables
+.env
+.env.*
+
+# Security files
+*.pem
+*.key
+*.crt
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Coverage reports
+coverage/
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+
+# Others
+*.lock

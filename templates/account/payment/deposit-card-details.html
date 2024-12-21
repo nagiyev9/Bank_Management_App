@@ -1,0 +1,151 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}
+
+<!-- Title -->
+{% block title %} Deposit | Card Details {% endblock %}
+
+<!-- Body -->
+{% block body %}
+<form method="post">
+  {% csrf_token %}
+  <div class="container px-5" style="margin-top: 80px">
+    <div class="mb-4">
+      <h2>Confirm order and pay</h2>
+      <span
+        >Please make the payment, after that you can enjoy all the features and
+        benefits.</span
+      >
+    </div>
+    <hr />
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card p-3">
+          <h6 class="text-uppercase">Payment details</h6>
+
+          <!-- Name on card -->
+          <div class="inputbox mt-3">
+            {{ form.name_on_card.label_tag }} {{ form.name_on_card }}
+          </div>
+
+          <!-- Card number -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="inputbox mt-3 mr-2">
+                {{ form.card_number.label_tag }} {{ form.card_number }}
+              </div>
+            </div>
+
+            <!-- Expiry and CVV -->
+            <div class="col-md-6">
+              <div class="d-flex flex-row gap-2">
+                <div class="inputbox mt-3 mr-2">
+                  Expiry Date
+                  <div class="d-flex align-items-center gap-2">
+                    {{ form.expiry_date_month }} <b>/</b>
+                    {{ form.expiry_date_year }}
+                  </div>
+                </div>
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.cvv.label_tag }} {{ form.cvv }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Billing address -->
+          <div class="mt-4 mb-4">
+            <h6 class="text-uppercase">Billing Address</h6>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.street_adress.label_tag }} {{ form.street_adress }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.city.label_tag }} {{ form.city }}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.state.label_tag }} {{ form.state }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.zip_code.label_tag }} {{ form.zip_code }}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="inputbox mt-3 mr-2">
+                  {{ form.message.label_tag }} {{ form.message }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 mb-4 d-flex justify-content-between">
+          <a href="{% url 'account:deposit_set_price' %}" class="btn btn-link"
+            >Previous step</a
+          >
+          <button class="btn btn-success px-3">
+            Pay ${{ deposit_amount }}
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div
+          class="card card-blue p-3 text-white mb-3"
+          style="background-color: #492bc4"
+        >
+          <span>You have to pay</span>
+          <div class="d-flex flex-row align-items-end mb-3">
+            <h1 class="mb-0" style="color: #fdcc49">${{ deposit_amount }}</h1>
+          </div>
+          <span
+            >Enjoy all the features and perks after you complete the
+            payment.</span
+          >
+          <div
+            class="highlight p-3 my-3"
+            style="background-color: #5737d9; border-radius: 10px"
+          >
+            <span
+              >100% Guaranteed support and update for the next 5 years.</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock %}
+
+<!-- Script -->
+{% block script %}
+<script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    // Get the month and year inputs
+    const month = document.querySelector('[name="expiry_date_month"]').value;
+    const year = document.querySelector('[name="expiry_date_year"]').value;
+
+    // Combine them into MM/YY format
+    const expiryDate = `${month.padStart(2, "0")}/${year}`;
+
+    // Add a hidden input with the combined expiry date
+    let hiddenInput = document.querySelector('[name="expiry_date"]');
+    if (!hiddenInput) {
+      hiddenInput = document.createElement("input");
+      hiddenInput.type = "hidden";
+      hiddenInput.name = "expiry_date";
+      this.appendChild(hiddenInput);
+    }
+    hiddenInput.value = expiryDate;
+  });
+</script>
+{% endblock %}

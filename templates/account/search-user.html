@@ -1,0 +1,55 @@
+{% extends 'layout.html' %} {% load static %} {% load crispy_forms_tags %}
+
+<!-- Title -->
+{% block title %} Search User {% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div style="margin-top: 90px">
+  <h1 class="text-center">Search User</h1>
+  <div class="container mt-4">
+    <form method="GET">
+      <div class="input-group shadow rounded">
+        <input
+          type="text"
+          name="q"
+          class="form-control"
+          placeholder="Enter username to search"
+          value="{{ query|default:'' }}"
+        />
+        <button type="submit" class="btn btn-primary px-4">
+          <i class="fas fa-search me-2"></i> Search
+        </button>
+      </div>
+    </form>
+
+    <hr class="my-5" />
+
+    {% if users %}
+    <h4>Search Results:</h4>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><strong>Full name</strong></div>
+          <div><strong class="float-start">Username</strong></div>
+          <div><strong>Action</strong></div>
+        </div>   
+      </li>
+    </ul>
+    <ul class="list-group">
+      {% for user in users %}
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div><strong>{{ user.first_name }} {{ user.last_name }}</strong></div>
+          <div><strong class="text-center">{{ user.username }}</strong></div>
+          <div><strong><a href="{% url 'account:send_money_to_user' user.id %}" class="btn btn-outline-info">Send Money</a></strong></div>
+        </div>        
+      </li>
+      {% endfor %}
+    </ul>
+    {% elif query %}
+    <p class="text-danger mt-4">No users found matching "{{ query }}"</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

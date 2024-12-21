@@ -1,0 +1,150 @@
+/* Hero Section */
+.hero {
+  background: url("https://images.unsplash.com/photo-1556740772-1a741367b93e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920")
+    no-repeat center center/cover;
+  color: white;
+  padding: 10rem 0;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.hero .btn {
+  font-size: 1.25rem;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.hero .btn:hover {
+  background-color: #f8d000;
+  color: #333;
+}
+
+/* Services Section */
+.services .card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.services .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.services .card-body {
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.services .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.services .card-text {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.services .card i {
+  font-size: 2.5rem;
+  color: #f8d000;
+}
+
+/* Statistics Section */
+.statistics .stat-card {
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.statistics .stat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.statistics .stat-card h5 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.statistics .stat-card .stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.statistics .stat-card .stat-value.text-success {
+  color: #28a745;
+}
+
+.statistics .stat-card .stat-value.text-danger {
+  color: #dc3545;
+}
+
+/* About Section */
+.about-section {
+  background-color: #f8f9fa;
+  padding: 5rem 0;
+}
+
+.about-section h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.about-section p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.about-section .about-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Footer Section */
+footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 3rem 0;
+}
+
+.footer-social a {
+  color: white;
+  margin: 0 15px;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #f8d000;
+}

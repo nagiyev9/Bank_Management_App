@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block title %} Email Confirmation {% endblock %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+  /* General Styles */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  .wrapper {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .confirmation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .confirmation-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .confirmation-form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #3a73d5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .confirmation-form button:hover {
+    background-color: #2a5b91;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 14px;
+  }
+</style>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div class="wrapper">
+  <h1>Email Confirmation</h1>
+
+  <!-- Confirmation Form -->
+  <form
+    method="POST"
+    action="{% url 'user:confirm-via-email' %}"
+    class="confirmation-form"
+  >
+    {% csrf_token %}
+
+    <input
+      type="text"
+      name="code"
+      placeholder="Enter confirmation code"
+      required
+      maxlength="6"
+      minlength="6"
+    />
+
+    {% if form.code.errors %}
+    <div class="error-message">
+      {% for error in form.code.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <button type="submit">Confirm</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,364 @@
+{% extends 'layout.html' %}
+
+<!-- Title -->
+{% block title %}
+  {{ user.first_name }} {{ user.last_name }}'s Profile
+{% endblock %}
+
+<!-- Custom Css -->
+{% block css %}
+<style>
+  .copy-button {
+    cursor: pointer;
+  }
+  .masked {
+    display: inline-block;
+  }
+  .real-value {
+    display: none;
+    font-weight: bold;
+  }
+  .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .modal-body a {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .modal-body a:hover {
+    transform: scale(1.02);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  .btn-outline-primary {
+    border: 1px solid #007bff;
+    color: #007bff;
+  }
+  .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  .btn-outline-success {
+    border: 1px solid #28a745;
+    color: #28a745;
+  }
+  .btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+  }
+  .btn-outline-warning {
+    border: 1px solid #ffc107;
+    color: #ffc107;
+  }
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: black;
+  }
+</style>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<section style="background-color: #eee ">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav
+          aria-label="breadcrumb"
+          class="bg-body-tertiary rounded-3 p-3 mb-4"
+        >
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item">Account</li>
+            <li class="breadcrumb-item active" aria-current="page">
+              My Profile
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    {% if not account.card.is_active %}
+    <div class="p-3 mb-2 bg-danger text-white d-flex justify-content-between align-items-center">
+      <p class="mb-0">Your card has not been activated. Please click the button below to activate your card</p>
+      <a href="{% url 'account:activate_card' %}" class="btn btn-light">Activate The Card</a>
+    </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            {% if user.gender == "M" %}
+            <img
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+              alt="avatar"
+              class="rounded-circle img-fluid"
+              style="width: 150px"
+            />
+            {% else %}
+            <img
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4.webp"
+              alt="avatar"
+              class="rounded-circle img-fluid"
+              style="width: 150px"
+            />
+            {% endif %}
+
+            <h5 class="my-3">{{ user.first_name }} {{ user.last_name }}</h5>
+            <p class="text-muted mb-1">{{ user.username }}</p>
+            <p class="text-muted mb-4">
+              {% if account.adrress %} 
+              {{ account.adrress }} 
+              {% else %} 
+              No address information 
+              {% endif %}
+            </p>
+            <div class="d-flex justify-content-center mb-2 gap-2">
+              <a
+                href="{% url 'account:deposit_set_price' %}"
+                class="btn btn-primary"
+              >
+                Deposit
+              </a>
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Payments
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fas fa-wallet me-2"></i>Choose Payment Method</h1>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column align-items-start gap-3">
+                      <a href="{% url 'account:search_user' %}" class="btn btn-outline-primary d-flex align-items-center w-100">
+                        <i class="fas fa-user-friends me-3"></i> Send Money To Other User Account
+                      </a>
+                      <a href="{% url 'account:send_money_to_bank_card' %}" class="btn btn-outline-success d-flex align-items-center w-100">
+                        <i class="fas fa-credit-card me-3"></i> Send Money To Bank Card
+                      </a>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center p-3"
+              >
+                <i class="fas fa-dollar-sign fa-lg text-success"></i>
+                <p class="mb-0">Account Balance: ${{ account.card.balance }}</p>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center p-3"
+              >
+                <i class="fas fa-credit-card fa-lg text-primary"></i>
+                {% if account.card.is_active %}
+                <p class="mb-0">Card Status: Active</p>
+                {% else %}
+                <p class="mb-0">Card Status: Not active</p>
+                {% endif %}
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center p-3"
+              >
+                <i class="fas fa-shield-alt fa-lg text-warning"></i>
+                <p class="mb-0">Insurance: Covered</p>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center p-3"
+              >
+                <i class="fas fa-globe fa-lg text-secondary"></i>
+                <div
+                  class="mb-0 px-4 d-flex flex-column justify-content-center"
+                >
+                  <p class="mb-0">Profile Url:</p>
+                  <p class="profile-link mb-0">{{ account.profile_url }}</p>
+                </div>
+                <i class="fa-regular fa-clipboard copy-button"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Date of Birth</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ user.birthday_date }}</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ user.email }}</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ user.number }}</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row card-number">
+              <div class="col-sm-3">
+                <p class="mb-0">Card Number</p>
+              </div>
+              <div class="col-sm-9 d-flex align-items-center">
+                <span class="masked">**** **** **** ****</span>
+                <span class="real-value">{{ account.card.card_number }}</span>
+                <button
+                  class="btn btn-link py-0 px-3"
+                  onclick="toggleCardInfo('card-number')"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div class="row expire-date">
+              <div class="col-sm-3">
+                <p class="mb-0">Expire Date</p>
+              </div>
+              <div class="col-sm-9 d-flex align-items-center">
+                <span class="masked">**** *** ****</span>
+                <span class="real-value"
+                  >{{ account.card.card_expire_date }}</span
+                >
+                <button
+                  class="btn btn-link py-0 px-3"
+                  onclick="toggleCardInfo('expire-date')"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div class="row cvv">
+              <div class="col-sm-3">
+                <p class="mb-0">CVV</p>
+              </div>
+              <div class="col-sm-9 d-flex align-items-center">
+                <span class="masked">***</span>
+                <span class="real-value">{{ account.card.card_cvv }}</span>
+                <button class="btn btn-link py-0 px-3" onclick="toggleCardInfo('cvv')">
+                  Show
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="mb-4">Recent Transactions</h5>
+            <ul class="list-group">
+              {% if not transaction_history %}
+                <li class="list-group-item">
+                  <span class="text-center">There is no transaction history</span>
+                </li>
+              {% else %}
+                <!-- For Loop -->
+                {% for transaction in transaction_history %}
+                  <li class="list-group-item d-flex justify-content-between">
+                    <!-- Start -->
+                    <span>
+                      {% if transaction.reciever_user %}
+                      {{ transaction.reciever_user }}
+                      {% else %}
+                      {{ transaction.reciever_card }}
+                      {% endif %}
+                    </span>
+  
+                    <!-- Middle -->
+                    {% if transaction.transaction_type == 'withdraw' or transaction.transaction_type == 'card payment' %}
+                      <span class="float-end text-danger">-${{ transaction.amount }}</span>
+                    {% elif transaction.transaction_type == 'deposit' %}
+                      <span class="float-end text-success">+${{ transaction.amount }}</span>
+                    {% else %}
+                      <span class="float-end text-secondary">${{ transaction.amount }}</span>
+                    {% endif %}
+
+                    <!-- End -->
+                    <span class="float-end">{{ transaction.created_at }}</span>
+                  </li>
+                {% endfor %}
+                <!-- End Loop -->
+              {% endif %}
+            </ul>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<!-- Script -->
+{% block script %}
+<script>
+  function toggleCardInfo(field) {
+    const realValue = document.querySelector(`.${field} .real-value`);
+    const maskedValue = document.querySelector(`.${field} .masked`);
+    const button = document.querySelector(`.${field} button`);
+
+    if (realValue && maskedValue && button) {
+      if (realValue.style.display === "none") {
+        realValue.style.display = "inline";
+        maskedValue.style.display = "none";
+        button.textContent = "Hide";
+      } else {
+        realValue.style.display = "none";
+        maskedValue.style.display = "inline";
+        button.textContent = "Show";
+      }
+    }
+  }
+
+  const copyButton = document.querySelector(".copy-button");
+  copyButton.addEventListener("click", () => {
+    const profileUrl = document
+      .querySelector(".profile-link")
+      .textContent.trim();
+
+    const tempInput = document.createElement("input");
+    tempInput.value = profileUrl;
+    document.body.appendChild(tempInput);
+
+    tempInput.select();
+    document.execCommand("copy");
+
+    document.body.removeChild(tempInput);
+
+    alert("Profile URL copied to clipboard!");
+  });
+</script>
+{% endblock %}

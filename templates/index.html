@@ -1,0 +1,158 @@
+{% extends 'layout.html' %} {% load static %}
+
+<!-- Title -->
+{% block title %} Bank Management | Homepage {% endblock %}
+
+<!-- Custom CSS -->
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<header class="hero">
+  <div class="container">
+    <h1>Welcome to Bank Management</h1>
+    <p>Your trusted partner for all your financial needs.</p>
+    <a href="#services" class="btn btn-primary btn-lg">Explore Services</a>
+  </div>
+</header>
+
+<section id="services" class="services py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Our Services</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <i class="bi bi-cash"></i>
+            <h5 class="card-title">Withdraw Money</h5>
+            <p class="card-text">
+              Access your funds securely and conveniently anytime.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <i class="bi bi-wallet2"></i>
+            <h5 class="card-title">Transfer Money</h5>
+            <p class="card-text">
+              Send money to anyone, anywhere, with ease and speed.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <i class="bi bi-piggy-bank"></i>
+            <h5 class="card-title">Deposit Funds</h5>
+            <p class="card-text">
+              Securely deposit funds into your account without hassle.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="statistics" class="statistics py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Financial Statistics</h2>
+    <div class="row g-4">
+      {% if account %}
+      <div class="col-md-4">
+        <div class="stat-card">
+          <h5>Total Balance</h5>
+          <p class="stat-value text-success">${{ account.card.balance }}</p>
+        </div>
+      </div>
+      {% if transaction_history %}
+      <div class="col-md-4">
+        <div class="stat-card">
+          <h5>Last Transaction</h5>
+          <p class="stat-value text-danger">
+            ${{ transaction_history.amount }}
+          </p>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-md-4">
+        <div class="stat-card h-100">
+          <h5>Last Transaction</h5>
+          <b class="text-danger" style="font-size: large"
+            >You have no transaction history</b
+          >
+        </div>
+      </div>
+      {% endif %} {% else %}
+      <div class="col-md-4 h-100">
+        <div class="stat-card">
+          <h5>Total Balance</h5>
+          <p class="stat-value text-success">$25,000</p>
+        </div>
+      </div>
+      <div class="col-md-4 h-100">
+        <div class="stat-card">
+          <h5>Last Transaction</h5>
+          <p class="stat-value text-danger">-$500</p>
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-md-4">
+        <div class="stat-card h-100">
+          <h5>Market Trends</h5>
+          <h4><i>Cryptocurrency, Forex, and more!</i></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Us Section -->
+<section id="about" class="about-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">About Us</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          We are a customer-centric financial institution, offering a wide range
+          of services designed to help you manage and grow your wealth with
+          ease. Whether you're looking to withdraw money, transfer funds, or
+          invest in market trends, we have the tools and expertise to support
+          your financial goals.
+        </p>
+        <p>
+          Our mission is to provide accessible and secure financial services
+          that empower individuals and businesses to thrive. Join us today and
+          experience the future of banking.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img
+          src="https://images.unsplash.com/photo-1556740772-1a741367b93e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+          class="about-img"
+          alt="About Us"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="text-center">
+      <p>&copy; 2024 Bank Management. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://mahaddinnagiyev.netlify.app/" target="_blank"><i class="fa-solid fa-globe"></i></a>
+        <a href="https://github.com/nagiyev9" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/nagiyev-mahaddin-3395a72a0/" target="_blank"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% endblock %}

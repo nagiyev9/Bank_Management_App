@@ -1,0 +1,61 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}
+
+<!-- Title -->
+{% block title %} Payment | Send Money To Bank Card {% endblock %}
+
+<!-- CSS -->
+{% block css %}
+<style>
+  input[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+  }
+</style>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div class="container" style="margin-top: 80px">
+  <div class="mb-4">
+    <h2>Send Money To Bank Card</h2>
+    <span
+      >Please make the payment, after that you can enjoy all the features and
+      benefits.</span
+    >
+  </div>
+  <hr class="my-5" />
+  <div class="">
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Card Information -->
+      <div data-mdb-input-init class="form-outline mb-4">
+        <input
+          type="email"
+          id="form3Example3"
+          class="form-control"
+          value="{{ sender.card_number }}"
+          readonly
+        />
+        <label class="form-label" for="form3Example3">Card Number</label>
+      </div>
+
+      {{ form|crispy }}
+
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-between align-items-center">
+        <button
+          data-mdb-ripple-init
+          type="submit"
+          class="btn btn-primary btn-block"
+        >
+          Send Money
+        </button>
+        <a href="{% url 'account:profile_page' %}" class="btn btn-link">Back</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
